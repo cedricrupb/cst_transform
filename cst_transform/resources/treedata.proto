@@ -1,0 +1,19 @@
+syntax = "proto2";
+
+message AnnotatedTree {
+  required string name = 1;
+  repeated int32 nodes = 2;
+  repeated int32 depth = 3;
+  repeated int32 from_node = 4;
+  repeated int32 assignment = 5;
+  repeated int32 assign_attr = 6;
+  repeated int32 position = 7;
+  repeated TokenPosition tokens = 8;
+}
+
+message TokenPosition {
+  required int32 lineStart = 1;
+  required int32 lineEnd = 2;
+  required int32 charStart = 3;
+  required int32 charEnd = 4;
+}
