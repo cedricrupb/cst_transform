@@ -71,8 +71,6 @@ class SparseAttention(th.nn.Module):
         new_context_layer_shape = context.size()[:-2] + (self.all_head_size,)
         context = context.view(*new_context_layer_shape)
 
-        print(assignment[:30])
-
         context = scatter(context, assignment.view(-1, 1),
                           dim=0, dim_size=queries.size(0))
 

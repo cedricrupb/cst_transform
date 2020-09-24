@@ -1,0 +1,1 @@
+{"hidden": 128, "max_depth": 3, "dropout": 0.1, "reducer_config": {"num_attention_heads": 1, "intermediate_dim_ratio": 1, "connect_dropout": 0.1, "residual_dropout": 0.1, "value_transform": true}}

@@ -287,7 +287,7 @@ class WriteGraph:
         data = self.proto
         id = len(data.nodes)
 
-        if self._indexer:
+        if self._indexer is not None:
             lix = self._indexer.index('ast', label)
         else:
             lix = label

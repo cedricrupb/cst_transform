@@ -11,12 +11,31 @@ from .model_transformer import (
     HierarchicalEncoder
 )
 
+from .config_extra import ExtraTransformerConfig
+
+from .model_extra import (
+    PosDepthEmbedding,
+    ExtraHierarchicalEncoder
+)
+
 
 def default_config(name):
 
     if name == 'hierarchical_encoder':
         return {
             'config': {
+                'hidden_size': 64,
+                'intermediate_size': 64,
+                'max_depth': 3,
+                'attention_dropout_ratio': 0.1,
+                'residual_dropout_ratio': 0.1
+            }
+        }
+
+    if name == 'extra_encoder':
+        return {
+            'config': {
+                'max_seq_length': 128,
                 'hidden_size': 64,
                 'intermediate_size': 64,
                 'max_depth': 3,
@@ -32,6 +51,9 @@ def get_config_class(name):
     if name == "hierarchical_encoder":
         return HTransformerConfig
 
+    if name == "extra_encoder":
+        return ExtraTransformerConfig
+
     raise ValueError("Unknown model type: %s" % name)
 
 
@@ -39,6 +61,9 @@ def get_model_class(name):
 
     if name == "hierarchical_encoder":
         return HierarchicalEncoder
+
+    if name == "extra_encoder":
+        return ExtraHierarchicalEncoder
 
     raise ValueError("Unknown model type: %s" % name)
 

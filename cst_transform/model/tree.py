@@ -25,7 +25,6 @@ class TreeModel(th.nn.Module):
         reducer = self.reducers
 
         if self.depth_accessible:
-            print("!!! Depth %d" % depth_id)
             reducer = self.reducers[depth_id]
 
         return reducer(parent_tensor, child_tensor, edge_index)

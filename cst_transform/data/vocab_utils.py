@@ -58,6 +58,9 @@ class Indexer(object):
     def from_json_io(self, file_object):
         self._from_dict_(json.load(file_object))
 
+    def __len__(self):
+        return self._counter
+
 
 class MultiIndexer(object):
 
@@ -70,6 +73,9 @@ class MultiIndexer(object):
     def _register(self, name):
         if name not in self._index:
             self._index[name] = Indexer()
+
+    def __len__(self):
+        return sum([len(v) for v in self._index.values()])
 
     def index(self, name, identifier, add_index=True):
         if add_index:

@@ -1,0 +1,105 @@
+body {
+  width: 100%;
+  height: 95%;
+  background-color: #f4f4f4;
+}
+
+div#codepanel {
+  padding-top: 5%;
+  padding-left: 3%;
+}
+
+div#code {
+  float: left;
+  height: 80%;
+  width: 20%;
+}
+
+div#code .header{
+  width: 100%;
+  display: block;
+}
+
+div#code #codearea {
+  float: left;
+  max-width: 90%;
+  max-height: 90%;
+}
+
+div#divrun {
+  float:right;
+  height: 100%;
+  vertical-align: middle;
+}
+
+button#run {
+  margin-right: -2em;
+}
+
+div#result {
+  margin-left: 26%;
+  margin-top:  0%;
+  margin-right: 5%;
+  height: 80%;
+}
+
+pre#codeout {
+  clear: both;
+  max-height: 35%;
+  overflow-y: scroll;
+}
+
+div#ast {
+  overflow-y: scroll;
+  height: 45%;
+}
+
+pre#codeout ol li:hover{
+  background-color: lightblue;
+  cursor: pointer;
+}
+
+pre#codeout ol li.active{
+  background-color: blue;
+}
+
+pre#codeout ol li.active span{
+  color: white;
+}
+
+
+li.L0, li.L1, li.L2, li.L3,
+li.L5, li.L6, li.L7, li.L8 {
+  list-style-type: decimal !important;
+}
+
+div#predict-box {
+  height: 12%;
+  background-color: white;
+  padding: 5%;
+  text-align: center;
+  background-color: #2185d0;
+  color: white;
+}
+
+div#predict-box span {
+  display: block;
+  margin-bottom: 3%;
+}
+
+span#prediction {
+  font-size: 2em;
+}
+
+h3#func-header{
+  display: inline;
+  float:left;
+  width: 30%;
+}
+
+div#color-legend {
+  float:right;
+  width: 60%;
+  height: 2%;
+  margin-top: 1%;
+}
