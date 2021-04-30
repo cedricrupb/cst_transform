@@ -6,6 +6,7 @@ class Indexer(object):
         self._buffer = {}
         self._counter = 0
         self._reverse = None
+        self._close = False
 
     def _build_reverse(self):
 
@@ -21,7 +22,7 @@ class Indexer(object):
             self._counter += 1
 
     def index(self, identifier, add_index=True):
-        if add_index:
+        if not self._close and add_index:
             self._register(identifier)
         try:
             return self._buffer[identifier]
@@ -57,6 +58,9 @@ class Indexer(object):
 
     def from_json_io(self, file_object):
         self._from_dict_(json.load(file_object))
+
+    def close(self):
+        self._close = True
 
     def __len__(self):
         return self._counter
@@ -111,3 +115,6 @@ class MultiIndexer(object):
 
     def from_json_io(self, file_object):
         self._from_dict_(json.load(file_object))
+
+    def close(self):
+        for indexer in self._index.values(): indexer.close()

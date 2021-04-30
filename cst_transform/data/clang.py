@@ -78,7 +78,7 @@ def _reduce_op_name(name):
 
 
 def _refine_op(obj):
-    obj.type = '_'.join([obj.type]+[t[1:-1] for t in obj.tokens if t not in ['prefix', 'postfix']])
+    obj.type = '_'.join([obj.type]+[t[1:-1] for t in obj.tokens if t not in ['prefix', 'postfix', 'cannot', 'overflow']])
     obj.type = _reduce_op_name(obj.type)
 
 def _refine_cast(obj):

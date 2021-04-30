@@ -32,9 +32,9 @@ and web interface which can be used to test these models.
 [architecture]: https://github.com/cedricrupb/cst_transform/blob/master/architecture.PNG
 
 ## Installation
-Dependencies: Python 3.6, PyTorch 1.5.1, PyTorch Geometric 1.6.0
+Dependencies: Python 3.8.0, PyTorch 1.8.0, PyTorch Geometric 1.7.0, Clang 12.0
 ```bash
-$ pip install torch==1.5.1
+$ pip install torch==1.8.0
 $ pip install -r requirements.txt
 $ pip install -e "."
 ```

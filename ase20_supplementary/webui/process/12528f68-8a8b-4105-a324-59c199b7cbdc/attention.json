@@ -1,0 +1,142 @@
+{
+    "__init__": {
+        "attention": 0.18093976378440857
+    },
+    "main": {
+        "attention": 0.7580605149269104,
+        "DeclStmt:0:0": {
+            "label": "DeclStmt",
+            "pos": 0,
+            "attention": 0.014806173741817474,
+            "ast": {
+                "VarDecl:0:0": 0.1391485184431076,
+                "DeclStmt:1:0": 0.8599852919578552,
+                "[NOOP]:57:0": 0.0008661760948598385
+            }
+        },
+        "DeclStmt:1:1": {
+            "label": "DeclStmt",
+            "pos": 1,
+            "attention": 0.014806173741817474,
+            "ast": {
+                "VarDecl:2:0": 0.1391485184431076,
+                "DeclStmt:3:0": 0.8599852919578552,
+                "[NOOP]:56:0": 0.0008661760948598385
+            }
+        },
+        "DeclStmt:2:2": {
+            "label": "DeclStmt",
+            "pos": 2,
+            "attention": 0.014992884360253811,
+            "ast": {
+                "FloatingLiteral:4:0": 0.04108462110161781,
+                "<FloatingCast>:5:0": 0.00379443378187716,
+                "VarDecl:6:0": 0.13290366530418396,
+                "DeclStmt:7:0": 0.8213899731636047,
+                "[NOOP]:55:0": 0.0008273029234260321
+            }
+        },
+        "DeclStmt:3:3": {
+            "label": "DeclStmt",
+            "pos": 3,
+            "attention": 0.014992884360253811,
+            "ast": {
+                "FloatingLiteral:8:0": 0.04108462110161781,
+                "<FloatingCast>:9:0": 0.00379443378187716,
+                "VarDecl:10:0": 0.13290366530418396,
+                "DeclStmt:11:0": 0.8213899731636047,
+                "[NOOP]:54:0": 0.0008273029234260321
+            }
+        },
+        "ForStmt:4:4": {
+            "label": "ForStmt",
+            "pos": 4,
+            "attention": 0.6223970055580139,
+            "ast": {
+                "IntRefExpr:12:0": 0.07307926565408707,
+                "BinaryOperator_int_<:13:0": 0.09627625346183777,
+                "BinaryOperator_int_=:14:0": 0.3038586974143982,
+                "ShortLiteral:15:0": 0.0751698762178421,
+                "<LValueToRValue>:16:0": 0.10104621946811676,
+                "ForStmt:17:0": 0.07075469940900803,
+                "UnaryOperator_int_++:18:0": 0.04647737368941307,
+                "BitLiteral:19:0": 0.22070352733135223,
+                "[NOOP]:53:0": 0.01263417024165392
+            }
+        },
+        "BinaryOperator_float_=:5:5": {
+            "label": "BinaryOperator_float_=",
+            "pos": 5,
+            "attention": 0.006034837570041418,
+            "ast": {
+                "FloatRefExpr:20:0": 0.12305115908384323,
+                "ByteLiteral:21:0": 0.38415682315826416,
+                "BinaryOperator_float_*:22:0": 0.16130420565605164,
+                "<LValueToRValue>:23:0": 0.08317092061042786,
+                "<IntegralToFloating>:24:0": 0.0566001757979393,
+                "BinaryOperator_float_=:25:0": 0.13431833684444427,
+                "[NOOP]:52:0": 0.057398390024900436
+            }
+        },
+        "BinaryOperator_float_=:6:6": {
+            "label": "BinaryOperator_float_=",
+            "pos": 6,
+            "attention": 0.008772910572588444,
+            "ast": {
+                "FloatRefExpr:26:0": 0.12535980343818665,
+                "<FloatingCast>:27:0": 0.11374272406101227,
+                "<LValueToRValue>:28:0": 0.08473134785890579,
+                "FloatingLiteral:29:0": 0.09205610305070877,
+                "BinaryOperator_double_*:30:0": 0.18236462771892548,
+                "BinaryOperator_float_=:31:0": 0.13683834671974182,
+                "ParenExpr:32:0": 0.0659397691488266,
+                "BinaryOperator_double_-:33:0": 0.14049197733402252,
+                "[NOOP]:51:0": 0.05847528576850891
+            }
+        },
+        "BinaryOperator_float_=:7:7": {
+            "label": "BinaryOperator_float_=",
+            "pos": 7,
+            "attention": 0.007260240614414215,
+            "ast": {
+                "BinaryOperator_float_=:34:0": 0.24017882347106934,
+                "FloatRefExpr:35:0": 0.22003163397312164,
+                "BinaryOperator_float_*:36:0": 0.28843310475349426,
+                "<LValueToRValue>:37:0": 0.14872054755687714,
+                "[NOOP]:50:0": 0.10263587534427643
+            }
+        },
+        "CallExpr:8:8": {
+            "label": "CallExpr",
+            "pos": 8,
+            "attention": 0.036462076008319855,
+            "ast": {
+                "FloatRefExpr:38:0": 0.06320548057556152,
+                "BinaryOperator_int_<:39:0": 0.14776141941547394,
+                "<FloatingCast>:40:0": 0.13443095982074738,
+                "CallExpr:41:0": 0.23690944910049438,
+                "<LValueToRValue>:42:0": 0.09659688919782639,
+                "<FunctionToPointerDecay>:43:0": 0.04280557855963707,
+                "FloatingLiteral:44:0": 0.17731782793998718,
+                "FunctionRefExpr:45:0": 0.08042512089014053,
+                "[NOOP]:49:0": 0.02054731361567974
+            }
+        },
+        "ReturnStmt:9:9": {
+            "label": "ReturnStmt",
+            "pos": 9,
+            "attention": 0.2504797577857971,
+            "ast": {
+                "ReturnStmt:46:0": 6.508691876661032e-05,
+                "BitLiteral:47:0": 0.9998300075531006,
+                "[NOOP]:48:0": 0.00010489965643500909
+            }
+        },
+        "[NOOP]:10:0": {
+            "label": "[NOOP]",
+            "pos": 0,
+            "attention": 0.008995072916150093,
+            "ast": {}
+        }
+    }
+}
