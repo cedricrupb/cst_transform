@@ -48,3 +48,14 @@ To generate the dataset from source code:
 ```bash
 $ python run_dataset_generation.py --benchmark_url [benchmark] --benchmark_code_dir [sv-bench path] --output_dir [path to dataset lmdb]
 ```
+
+## Inference
+The CST Transformer can be used for algorithm selection by running:
+```bash
+$ python run_predict.py --checkpoint [checkpoint] [file.c]
+```
+The command line preprocesses the given C file and then performs
+a algorithm selection based on the given checkpoint. 
+The checkpoint argument is optional and we load the "Tools" checkpoint on 
+default. Possible choices are [bmc-ki, sc, algorithms, tools] or a path to an
+existing checkpoint. 
