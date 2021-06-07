@@ -1,5 +1,5 @@
 # Attend and Represent: A Novel View on Algorithm Selection for Software Verification
-By Cedric Richter and Heike Wehrheim
+By Cedric Richter and Heike Wehrheim [[paper](https://ieeexplore.ieee.org/document/9286080)]
 
 ### **Attn + Represent: Architecture**
 ![architecture]
@@ -59,3 +59,20 @@ a algorithm selection based on the given checkpoint.
 The checkpoint argument is optional and we load the "Tools" checkpoint on 
 default. Possible choices are [bmc-ki, sc, algorithms, tools] or a path to an
 existing checkpoint. 
+
+## Embedding
+Besides algorithm selection, a pretrained CST Transformer can represent
+a C program in form of a vector representation. Embedding programs is currently
+handled by `run_predict.py`, which allows us to not only embed programs but also
+run inference with a precomputed embedding:
+```bash
+$ python run_predict.py --checkpoint [checkpoint] --embed --embed_file [file.json] [file.c]
+```
+This command prints out an program embedding instead of performing algorithm selection.
+If the option `--embed_file` is specified the embedding is additionally saved to
+a JSON file.
+
+
+Inference on an existing embedding file `file.json` can be run by leaving out the `--embed` option. In this case, `file.c` will be ignored.
+
+Note however that we expect that the precomputed embedding is produced by the same checkpoint which should be used for algorithm. The behavior is undefined in all other cases.

@@ -205,7 +205,7 @@ class HierarchicalEncoder(th.nn.Module):
         self.output_dropout = th.nn.Dropout(dropout)
         self.output_transform = th.nn.Linear(config.hidden_size, output_size)
 
-    def forward(self, x, depth_mask, edge_index, return_attention=False):
+    def forward(self, x, depth_mask, edge_index, return_attention=False, return_hidden=False):
 
         nodes = self.embedding(x)
 
@@ -214,14 +214,16 @@ class HierarchicalEncoder(th.nn.Module):
             return_attach=return_attention
         )
 
-        if return_attention:
-            output, attention = output[0], output[1]
+        if return_attention: output, attention = output[0], output[1]
 
         output = self.output_norm(output)
         output = self.output_dropout(output)
-        output = self.output_transform(output)
+        logits = self.output_transform(output)
 
-        if return_attention:
-            return output, attention
+        if return_attention or return_hidden:
+            logits = (logits,)
+            
+            if return_attention: logits += (attention,)
+            if return_hidden:    logits += (output,)
 
-        return output
+        return logits

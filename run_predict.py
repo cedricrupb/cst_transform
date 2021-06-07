@@ -117,22 +117,54 @@ def load_model(model_dir, num_classes, ase_checkpoint=True):
     return model
 
 
+def quick_load_linear(model_dir, num_classes, ase_checkpoint=False):
+    if not os.path.exists(model_dir):
+        raise ValueError("Model path %s does not exists." % model_dir)
+
+    model_path = os.path.join(model_dir, 'model.pt')
+    config_path = os.path.join(model_dir, 'config.json')
+
+    with open(config_path, 'r') as f:
+        hidden_size = json.load(f)["hidden"]
+    print("Predictor: Linear model (%d x %d)" % (hidden_size, num_classes))
+    model = torch.nn.Linear(hidden_size, num_classes)
+    param = torch.load(model_path, map_location=torch.device("cpu") )
+    
+    if ase_checkpoint:
+        param = _map_old_checkpoint(param)
+
+    linear_params = {
+        "weight": param["output_transform.weight"],
+        "bias"  : param["output_transform.bias"]
+    }
+    
+    model.load_state_dict(linear_params)
+    model.eval()
+
+    return model
+
+
+def _log_to_classes(logits, classes):
+    mask = torch.tensor([1 if c.startswith("-") else 0 for c in classes]).float()
+    logits = logits * (1 - mask) - 1e9 * mask 
+
+    probs = torch.nn.Softmax(dim=-1)(logits)
+    
+    class_probs = [(c, probs[i].item()) for i, c in enumerate(classes)]
+
+    return sorted(class_probs, key=lambda x: x[1], reverse=True)
+
+
 def predict(model, data, classes):
 
     data.x[data.x < 0] = 36
 
-    pred = model(
-        data.x, data.depth_mask, data.edge_index
-    ).squeeze()
+    pred, embedding = model(
+        data.x, data.depth_mask, data.edge_index, return_hidden=True
+    )
+    pred = pred.squeeze()
 
-    mask = torch.tensor([1 if c.startswith("-") else 0 for c in classes]).float()
-    pred = pred * (1 - mask) - 1e9 * mask 
-
-    probs = torch.nn.Softmax(dim=-1)(pred)
-    
-    class_probs = [(c, probs[i].item()) for i, c in enumerate(classes)]
-    class_probs = sorted(class_probs, key=lambda x: x[1], reverse=True)
-    return class_probs
+    return _log_to_classes(pred, classes), embedding
 
 
 if __name__ == "__main__":
@@ -140,15 +172,22 @@ if __name__ == "__main__":
     parser.add_argument("program_file")
 
     parser.add_argument("--checkpoint", default="tools")
+    parser.add_argument("--ase_checkpoint", action="store_true")
+
+    # Embedding
+    parser.add_argument("--embed", action="store_true")
+    parser.add_argument("--embed_file", help="If embed is activated, write to this file. Otherwise, load the embedding from the path.")
 
     args = parser.parse_args()
 
     checkpoint = args.checkpoint
 
+    ase_checkpoint = args.ase_checkpoint
     base = os.path.abspath(__file__)
     base = os.path.dirname(base)
 
     if checkpoint in checkpoints:
+        ase_checkpoint = True
         checkpoint = checkpoints[checkpoint]
         checkpoint = os.path.join(base, checkpoint)
 
@@ -157,6 +196,10 @@ if __name__ == "__main__":
 
     if not os.path.exists(index_path):
         print("Cannot find index file at %s" % index_path)
+        exit()
+    
+    if args.embed_file and not os.path.exists(args.embed_file):
+        print("Try to use precomputed embedding %s, but it does not exists." % args.embed_file)
         exit()
 
     indexer = MultiIndexer()
@@ -167,14 +210,37 @@ if __name__ == "__main__":
     with open(label_path, "r") as i:
         labels = json.load(i)
 
-    # Load model
-    print("Load model from checkpoint %s" % checkpoint)
-    model = load_model(checkpoint, len(labels))
+    if args.embed_file and not args.embed:
+        # Quick load model and run prediction from precomputed embedding
+        print("Load linear classifier from checkpoint %s" % checkpoint)
+        model = quick_load_linear(checkpoint, len(labels), ase_checkpoint)
 
-    print("Parse program from file %s" % args.program_file)
-    program_repr = parse_program(args.program_file, indexer)
+        with open(args.embed_file, "r") as i:
+            embedding = torch.FloatTensor(json.load(i))
+        
+        prediction = _log_to_classes(model(embedding), labels)
+    
+    else:
+         # Load model
+        print("Load model from checkpoint %s" % checkpoint)
+        model = load_model(checkpoint, len(labels), ase_checkpoint)
 
-    prediction = predict(model, program_repr, labels)
+        print("Parse program from file %s" % args.program_file)
+        program_repr = parse_program(args.program_file, indexer)
+
+        prediction, embedding = predict(model, program_repr, labels)
+
+        if args.embed:
+            print("Embedding:")
+            print(", ".join([str(float(v)) for v in embedding[0]]))
+
+            if args.embed_file:
+                print("Save embedding to %s" % args.embed_file)
+                with open(args.embed_file, "w") as o:
+                    json.dump([float(v) for v in embedding[0]], o)
+
+            exit()
+
 
     print("Prediction:")
 
