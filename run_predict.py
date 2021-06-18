@@ -178,6 +178,9 @@ if __name__ == "__main__":
     parser.add_argument("--embed", action="store_true")
     parser.add_argument("--embed_file", help="If embed is activated, write to this file. Otherwise, load the embedding from the path.")
 
+    # Confidence
+    parser.add_argument("--target", help="Optional argument. Produces a confidence score for the given target if possible")
+
     args = parser.parse_args()
 
     checkpoint = args.checkpoint
@@ -210,6 +213,11 @@ if __name__ == "__main__":
     with open(label_path, "r") as i:
         labels = json.load(i)
 
+    if args.target and args.target not in labels:
+        print("Target label %s is not supported by checkpoint %s. Supported target labels are: %s"
+                % (args.target, args.checkpoint, str(labels)))
+        exit()
+
     if args.embed_file and not args.embed:
         # Quick load model and run prediction from precomputed embedding
         print("Load linear classifier from checkpoint %s" % checkpoint)
@@ -241,12 +249,19 @@ if __name__ == "__main__":
 
             exit()
 
+    if not args.target:
+        print("Prediction:")
 
-    print("Prediction:")
+        for tool, prob in prediction:
+            print("%s: %.2f%%" % (tool, 100 * prob))
 
-    for tool, prob in prediction:
-        print("%s: %.2f%%" % (tool, 100 * prob))
+        print()
+        prediction = [k for k, v in prediction if not k.startswith("-")]
+        print("Best prediction: %s" % prediction[0])
+    else:
+        probs = [p[1] for p in prediction]
+        min_prob, max_prob = min(probs), max(probs)
 
-    print()
-    prediction = [k for k, v in prediction if not k.startswith("-")]
-    print("Best prediction: %s" % prediction[0])
+        target_prob = [p for p in prediction if p[0] == args.target]
+        print("Target label: %s" % args.target)
+        print("Confidence: %f" % ((target_prob[0][1] - min_prob) / (max_prob - min_prob)))
