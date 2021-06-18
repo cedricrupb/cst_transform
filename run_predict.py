@@ -198,7 +198,7 @@ if __name__ == "__main__":
         print("Cannot find index file at %s" % index_path)
         exit()
     
-    if args.embed_file and not os.path.exists(args.embed_file):
+    if args.embed_file and not args.embed and not os.path.exists(args.embed_file):
         print("Try to use precomputed embedding %s, but it does not exists." % args.embed_file)
         exit()
 
