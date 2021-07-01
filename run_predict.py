@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import argparse
 import os
 import json
@@ -169,7 +170,7 @@ def predict(model, data, classes):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("program_file")
+    parser.add_argument("program_file", nargs='?')
 
     parser.add_argument("--checkpoint", default="tools")
     parser.add_argument("--ase_checkpoint", action="store_true")
@@ -182,6 +183,14 @@ if __name__ == "__main__":
     parser.add_argument("--target", help="Optional argument. Produces a confidence score for the given target if possible")
 
     args = parser.parse_args()
+
+    if not args.embed_file or args.embed: # The only case where no program file is required
+        if not args.program_file:
+            print("An program file can be substituted with an embedding file.")
+            print("However, an embedding file is not provided. Therefore, a program file is needed.")
+            print("Note: While producing an embedding file (--embed), a program file is also needed.")
+            print("Exit.")
+            exit()
 
     checkpoint = args.checkpoint
 

@@ -1,0 +1,18 @@
+{
+    "name": "tool_logistic_2021",
+    "description": "A simple selector baseline based on Logistic Regression (C = 10)",
+    "embedding": "tools",
+    "checkpoints": {
+        "2LS": "slogistic_2LS.jbl",
+        "CBMC": "slogistic_CBMC.jbl",
+        "CPAchecker": "slogistic_CPAchecker.jbl",
+        "DIVINE": "slogistic_DIVINE.jbl",
+        "ESBMC": "slogistic_ESBMC.jbl",
+        "Goblint": "slogistic_Goblint.jbl",
+        "PeSCo": "slogistic_PeSCo.jbl",
+        "symbiotic": "slogistic_symbiotic.jbl",
+        "UAutomizer": "slogistic_ULTIMATE Automizer.jbl",
+        "UKojak": "slogistic_ULTIMATE Kojak.jbl",
+        "UTaipan": "slogistic_ULTIMATE Taipan.jbl"
+    }
+}
