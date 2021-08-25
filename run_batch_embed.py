@@ -54,24 +54,59 @@ def parse_yml(file):
     
     return file_path
 
+# Handling file index for SVComp --------------------------------
 
-if __name__ == '__main__':
+def parse_set_file(file_path):
+    sub_paths = []
+    
+    with open(file_path, "r") as i:
+        for line in i:
+            if line.startswith("#"): continue
+            sub_paths.append(line.strip())
+
+    base_dir = os.path.dirname(file_path)
+
+    for sub_path in sub_paths:
+        for file_path in glob(os.path.join(base_dir, sub_path)):
+            yield file_path
+
+
+def parse_list_file(file_path):
+    base_dir = os.path.dirname(file_path)
+
+    with open(file_path, "r") as i:
+        for line in i:
+            yield os.path.join(base_dir, line.strip())
+
+
+def parse_file_index(file_index):
+    files = []
+
+    for file_path in file_index:
+        if file_path.endswith(".set"):
+            files.extend(parse_set_file(file_path))
+        else:
+            files.extend(parse_list_file(file_path))
+
+    return files
+
+# ----------------------------------------------------------------
+
+if __name__ == '__main__':  
     parser = argparse.ArgumentParser()
     parser.add_argument("input_folder")
     parser.add_argument("output_file")
-    parser.add_argument("--file_index")
+    parser.add_argument("--file_index", nargs="+")
 
     parser.add_argument("--checkpoint", default="tools")
 
     args = parser.parse_args()
 
     if args.file_index:
-        with open(args.file_index, "r") as i:
-            files = [L.strip() for L in i.readlines()]
-        
-        files = [os.path.join(args.input_folder, f) for f in files]
+        files = parse_file_index(args.file_index)
         files = [f for f in files if os.path.isfile(f)]
     else:
+        
         c_files = glob(os.path.join(args.input_folder, "**", "*.c"), recursive=True)
         i_files = glob(os.path.join(args.input_folder, "**", "*.i"), recursive=True)
 
