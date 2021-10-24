@@ -7,7 +7,7 @@ import json
 from tqdm import tqdm
 from glob import glob
 
-from utils import get_info
+from utils import handle_script_info
 
 from cst_transform.data import preprocessor as p
 from cst_transform.data import vocab_utils, lmdb_utils
@@ -82,9 +82,7 @@ def _stream_proto_objs(scan, pipeline, processed_files=None):
 
 
 if __name__ == '__main__':
-    # Print package information after start
-    package_info = get_info()
-    print("--- CST Transform %s [Git: %s] --------------------------------" % (package_info.version, package_info.git_commit))
+    handle_script_info()
 
     parser = argparse.ArgumentParser()
 

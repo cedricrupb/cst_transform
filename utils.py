@@ -1,12 +1,14 @@
 import os
+import sys
 import subprocess
 
 class PackageInfo:
     """Parses general package info from setup.py and the git info"""
 
-    def __init__(self, name, version, git_commit = None):
+    def __init__(self, name, version, git_commit = None, python_version = None):
         self.name = name
         self.version = version
+        self.python_version = python_version
         self._git_commit = git_commit
 
     @property
@@ -35,7 +37,7 @@ def parse_package_info():
     with open(os.path.join(base_path, "setup.py"), "r") as i:
         setup_info = i.read()
     
-    name, version = None, None
+    name, version, pyversion = None, None, None
 
     for line in setup_info.splitlines():
         line = line.strip()
@@ -45,13 +47,30 @@ def parse_package_info():
         if line.startswith("name"):
             _, name  = line.split("=")
             name = name[1:-2]
+        if line.startswith("python_requires"):
+            _, pyversion  = line.split("=", 1)
+            pyversion = pyversion[1:-2]
         
-    return PackageInfo(name, version)
+    return PackageInfo(name, version, python_version = pyversion)
 
 
 
 def get_info():
     return parse_package_info()
+
+
+def handle_script_info():
+    # Print package information after start
+    package_info = get_info()
+    print("--- CST Transform %s [Git: %s] --------------------------------" % (package_info.version, package_info.git_commit))
+
+    args = sys.argv
+    if any(arg == "--version" for arg in args):
+        
+        print()
+        print("CST Transform %s (Python %s)" % (package_info.version, package_info.python_version))
+
+        exit()
 
 
 if __name__ == "__main__":

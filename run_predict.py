@@ -5,7 +5,7 @@ import json
 
 import torch
 
-from utils import get_info
+from utils import handle_script_info
 
 from collections import OrderedDict
 
@@ -171,9 +171,7 @@ def predict(model, data, classes):
 
 
 if __name__ == "__main__":
-    # Print package information after start
-    package_info = get_info()
-    print("--- CST Transform %s [Git: %s] --------------------------------" % (package_info.version, package_info.git_commit))
+    handle_script_info()
 
     parser = argparse.ArgumentParser()
     parser.add_argument("program_file", nargs='?')

@@ -6,7 +6,7 @@ import json
 import numpy as np
 
 import joblib
-from utils import get_info
+from utils import handle_script_info, get_info
 
 import run_predict as rt
 
@@ -98,9 +98,7 @@ def embed_code(checkpoint, input_file):
 
 if __name__ == "__main__":
 
-    # Print package information after start
-    package_info = get_info()
-    print("--- CST Transform %s [Git: %s] --------------------------------" % (package_info.version, package_info.git_commit))
+    handle_script_info()
 
     parser = argparse.ArgumentParser()
     parser.add_argument("selector_folder")
