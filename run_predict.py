@@ -190,6 +190,7 @@ if __name__ == "__main__":
 
     if not args.embed_file or args.embed: # The only case where no program file is required
         if not args.program_file:
+            parser.print_help()
             print("An program file can be substituted with an embedding file.")
             print("However, an embedding file is not provided. Therefore, a program file is needed.")
             print("Note: While producing an embedding file (--embed), a program file is also needed.")
