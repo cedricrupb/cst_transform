@@ -49,6 +49,24 @@ To generate the dataset from source code:
 $ python run_dataset_generation.py --benchmark_url [benchmark] --benchmark_code_dir [sv-bench path] --output_dir [path to dataset lmdb]
 ```
 
+## Training an algorithm selector
+Training a new CST Transformer for algorithm selection can be achieved by running the training script with the previously obtained
+dataset:
+```bash
+$ python run_experiment.py 
+    --model_type hierarchical_encoder
+    --exp_type sv-bench_mc_cw
+    --lmdb [path to dataset lmdb]
+    --do_train
+    --save_epoch 1
+    --logging_epoch 1
+    --output_dir [path to model checkpoint dir]
+```
+The training script accepts for arguments to modify the training process. Please refer to `run_experiment.py -h` to get an overview. The specific configuration used to achieve the pretrained models are listed under checkpoints.
+
+Note: Training a CST Transformer is a lengthy process and might require multiple hours of training
+on specialised hardware (GPU). In our experiments, we found that employing the embedding of a pretrained CST Transformer as a feature encoding works quite well in most cases. We describe the process to train a custom algorithm selector using a pretrained CST Transformer in the following.
+
 ## Inference
 The CST Transformer can be used for algorithm selection by running:
 ```bash
