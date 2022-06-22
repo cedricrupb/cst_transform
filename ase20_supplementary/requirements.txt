@@ -1,6 +1,6 @@
 Flask==1.1.1
 Flask-RESTful==0.3.7
-numpy==1.18.2
+numpy==1.22.0
 protobuf==3.7.1
 protobuf3==0.2.1
 pycparser==2.19
