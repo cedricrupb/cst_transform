@@ -12,6 +12,29 @@ import run_predict as rt
 
 from cst_transform.data.vocab_utils import MultiIndexer
 
+class RTHardnessModel:
+
+    def __init__(self, model, weight):
+        self.model = model
+        self.weight = np.array(weight)
+
+    def predict_proba(self, X):
+        """Computes a hardness score. To fit the existing framework, we need to support predict_proba"""
+        prediction = self.model.predict_proba(X)
+
+        pmatrix = np.zeros((prediction.shape[0], self.weight.shape[0]))
+        for i, clazz_id in enumerate(self.model.classes_):
+            pmatrix[:, clazz_id] = prediction[:, i]
+        prediction = pmatrix
+
+        prediction = (prediction * self.weight).sum(axis = 1)
+
+        confidence = (max(self.weight) - prediction) / (max(self.weight) - min(self.weight))
+        negated_confidence = 1 - confidence
+
+        # Rescale to fit our framework
+        return np.stack([negated_confidence, confidence]).transpose()
+
 
 class MaxSelector:
 

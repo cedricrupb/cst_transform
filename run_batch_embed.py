@@ -124,7 +124,7 @@ if __name__ == '__main__':
         
         args.output_file = args.output_file + "-ct"
 
-    T = tqdm(files)
+    T = tqdm(sorted(files, key=lambda x: os.path.getsize(x)), total=len(files))
 
     with open(args.output_file, "w") as file_writer:
         for file in T:
