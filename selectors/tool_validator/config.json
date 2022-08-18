@@ -1,0 +1,17 @@
+{
+    "name": "tool_validator",
+    "description": "An algorithm selector for selecting combinations of verification tools and validators",
+    "embedding": "tools",
+    "checkpoints": {
+        "verifier-2ls-plus-complete": "selector_verifier-2ls-plus-complete.jbl",
+        "verifier-cpachecker-plus-complete": "selector_verifier-cpachecker-plus-complete.jbl",
+        "verifier-goblint-plus-complete": "selector_verifier-goblint-plus-complete.jbl",
+        "verifier-cbmc-plus-complete": "selector_verifier-cbmc-plus-complete.jbl",
+        "verifier-utaipan-plus-complete": "selector_verifier-utaipan-plus-complete.jbl",
+        "verifier-symbiotic-plus-complete": "selector_verifier-symbiotic-plus-complete.jbl",
+        "verifier-ukojak-plus-complete": "selector_verifier-ukojak-plus-complete.jbl",
+        "verifier-uautomizer-plus-complete": "selector_verifier-uautomizer-plus-complete.jbl",
+        "verifier-esbmc-kind-plus-complete": "selector_verifier-esbmc-kind-plus-complete.jbl",
+        "verifier-lart-plus-complete": "selector_verifier-lart-plus-complete.jbl"
+    }
+}
