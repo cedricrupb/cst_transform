@@ -1,15 +1,15 @@
 {
     "name": "svcomp23_selector",
-    "description": "The selector is trained for SVCOMP 2023. For training, we employ a subset of the SVCOMP 2022 results.",
+    "description": "",
     "embedding": "tools",
     "checkpoints": {
-        "ESBMC": "svcomp23_selector_ESBMC.jbl",
         "2LS": "svcomp23_selector_2LS.jbl",
-        "CBMC": "svcomp23_selector_CBMC.jbl",
         "ULTIMATE Automizer": "svcomp23_selector_ULTIMATE Automizer.jbl",
         "ULTIMATE Taipan": "svcomp23_selector_ULTIMATE Taipan.jbl",
-        "CPAchecker": "svcomp23_selector_CPAchecker.jbl",
+        "CBMC": "svcomp23_selector_CBMC.jbl",
         "symbiotic": "svcomp23_selector_symbiotic.jbl",
+        "CPAchecker": "svcomp23_selector_CPAchecker.jbl",
+        "ESBMC": "svcomp23_selector_ESBMC.jbl",
         "Pinaka": "svcomp23_selector_Pinaka.jbl"
     }
 }
