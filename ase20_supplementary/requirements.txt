@@ -1,4 +1,4 @@
-Flask==1.1.1
+Flask==2.2.5
 Flask-RESTful==0.3.7
 numpy==1.18.2
 protobuf==3.7.1
